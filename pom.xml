@@ -4,7 +4,7 @@
 
  <groupId>at.pria.koza</groupId>
  <artifactId>polybuf</artifactId>
- <version>0.0.1-SNAPSHOT</version>
+ <version>0.0.2</version>
  <name>Polybuf</name>
  <description>
   A library for serializing objectoriented (i.e. polymorphic) data structures

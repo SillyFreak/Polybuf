@@ -17,6 +17,7 @@
             <arg path="${SRC}" />
             <arg value="--java_out" />
             <arg path="${DST}" />
+            <arg path="${SRC}/${PKG}/polybuf.proto" />
         </exec>
     </target>
 </project>
