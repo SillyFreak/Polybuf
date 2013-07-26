@@ -30,7 +30,6 @@ public class PolybufInput {
         this.config = config;
     }
     
-    @SuppressWarnings("unchecked")
     public Object readObject(Obj obj) throws PolybufException {
         int typeId = obj.getTypeId();
         if(typeId == 0) {
@@ -46,7 +45,7 @@ public class PolybufInput {
             }
         }
         
-        PolybufIO<Object> io = (PolybufIO<Object>) config.get(typeId);
+        PolybufIO<Object> io = config.get(typeId);
         if(io == null) throw new PolybufException("No IO for type: " + typeId);
         Object object = io.initialize(this, obj);
         objects.put(obj.getId(), object);
