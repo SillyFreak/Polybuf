@@ -31,13 +31,12 @@ public class PolybufOutput {
         this.config = config;
     }
     
-    @SuppressWarnings("unchecked")
     public Obj writeObject(Object o) throws PolybufException {
         if(!(o instanceof PolybufSerializable)) throw new PolybufException("not serializable: " + o);
         
         PolybufSerializable object = (PolybufSerializable) o;
         int typeId = object.getTypeId();
-        PolybufIO<Object> io = (PolybufIO<Object>) config.get(typeId);
+        PolybufIO<Object> io = config.get(typeId);
         if(io == null) throw new PolybufException("No IO for type: " + typeId);
         
         Obj.Builder obj = Obj.newBuilder();

@@ -4,30 +4,20 @@
 
  <groupId>at.pria.koza</groupId>
  <artifactId>polybuf</artifactId>
- <version>0.0.2</version>
+ <version>0.0.3</version>
  <name>Polybuf</name>
  <description>
-  A library for serializing objectoriented (i.e. polymorphic) data structures
+  A library for serializing object-oriented (i.e. polymorphic) data structures
   into protobuf messages.
  </description>
  
  <properties>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.compiler.source>1.7</maven.compiler.source>
+  <maven.compiler.target>1.7</maven.compiler.target>
  </properties>
  
  <build>
-  <pluginManagement>
-   <plugins>
-    <plugin>
-     <artifactId>maven-compiler-plugin</artifactId>
-     <version>3.0</version>
-     <configuration>
-      <source>1.7</source>
-      <target>1.7</target>
-     </configuration>
-    </plugin>
-   </plugins>
-  </pluginManagement>
   <plugins>
    <plugin>
     <groupId>org.codehaus.mojo</groupId>
@@ -43,6 +33,35 @@
         <source>${project.build.directory}/generated-sources/protobuf</source>
        </sources>
       </configuration>
+     </execution>
+    </executions>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+    <executions>
+     <execution>
+      <id>default-source</id>
+      <phase>package</phase>
+      <goals>
+       <goal>jar-no-fork</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <configuration>
+     <overview>overview.html</overview>
+    </configuration>
+    <executions>
+     <execution>
+      <id>default-javadoc</id>
+      <phase>package</phase>
+      <goals>
+       <goal>jar</goal>
+      </goals>
      </execution>
     </executions>
    </plugin>

@@ -12,8 +12,8 @@ import at.pria.koza.polybuf.proto.Polybuf.Obj;
 
 /**
  * <p>
- * The {@code PolybufIO} interface is used by {@link PolybufOutput} and {@link PolybufInput} to implement conversion
- * between {@link PolybufSerializable} and {@link Obj} instances. See the
+ * The {@code PolybufIO} interface is used by {@link PolybufOutput} and {@link PolybufInput} to implement
+ * conversion between {@link PolybufSerializable} and {@link Obj} instances. See the
  * {@link #serialize(PolybufOutput, PolybufSerializable, net.slightlymagic.ticTacToe.proto.Objects.Obj.Builder)
  * serialize}, {@link #initialize(PolybufInput, Obj) initialize} and
  * {@link #deserialize(PolybufInput, Obj, PolybufSerializable) deserialize} methods for details.
@@ -61,7 +61,6 @@ public interface PolybufIO<T> {
      * @param in The {@link PolybufInput} doing deserialization
      * @param obj The {@link Obj} to deserialize from
      * @param object The object to serialize to
-     * @return A possibly unfinished instance that is the result of deserialization
      * @throws PolybufException if anything goes wrong
      */
     public void deserialize(PolybufInput in, Obj obj, T object) throws PolybufException;
