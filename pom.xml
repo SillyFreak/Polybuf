@@ -7,7 +7,7 @@
  <version>0.0.2-SNAPSHOT</version>
  <name>Polybuf</name>
  <description>
-  A library for serializing objectoriented (i.e. polymorphic) data structures
+  A library for serializing object-oriented (i.e. polymorphic) data structures
   into protobuf messages.
  </description>
  
