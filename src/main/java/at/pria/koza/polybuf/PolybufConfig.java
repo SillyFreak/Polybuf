@@ -10,6 +10,8 @@ package at.pria.koza.polybuf;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.ExtensionRegistry;
+
 
 /**
  * <p>
@@ -26,17 +28,20 @@ import java.util.Map;
  */
 public class PolybufConfig {
     private final Map<Integer, PolybufIO<?>> config;
+    private final ExtensionRegistry          registry;
     
     public PolybufConfig() {
         config = new HashMap<>();
+        registry = ExtensionRegistry.newInstance();
     }
     
-    public void put(int type, PolybufIO<?> io) {
-        config.put(type, io);
+    public ExtensionRegistry getRegistry() {
+        return registry;
     }
     
-    public void remove(int type) {
-        config.remove(type);
+    public void add(PolybufIO<?> io) {
+        config.put(io.getType(), io);
+        registry.add(io.getExtension());
     }
     
     @SuppressWarnings("unchecked")
