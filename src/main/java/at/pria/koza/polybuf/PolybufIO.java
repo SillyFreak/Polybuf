@@ -9,6 +9,10 @@ package at.pria.koza.polybuf;
 
 import at.pria.koza.polybuf.proto.Polybuf.Obj;
 
+import com.google.protobuf.Descriptors.FieldDescriptor;
+import com.google.protobuf.ExtensionRegistry;
+import com.google.protobuf.GeneratedMessage.GeneratedExtension;
+
 
 /**
  * <p>
@@ -23,6 +27,29 @@ import at.pria.koza.polybuf.proto.Polybuf.Obj;
  * @author SillyFreak
  */
 public interface PolybufIO<T> {
+    /**
+     * <p>
+     * Returns this IO's type's type ID. This can be retrieved like this:
+     * </p>
+     * <p>
+     * {@link PolybufIO#getExtension() getExtension()}{@code .} {@link GeneratedExtension#getDescriptor()
+     * getDescriptor()}{@code .} {@link FieldDescriptor#getNumber() getNumber()}
+     * </p>
+     * 
+     * @return this IO's type's type ID
+     */
+    public int getType();
+    
+    /**
+     * <p>
+     * Returns the extension used by the type of this IO to store type data in protobuf messages. This is primarily
+     * used in {@link PolybufConfig#add(PolybufIO)} to register the extension in the {@link ExtensionRegistry}.
+     * </p>
+     * 
+     * @return the extension used by this IO
+     */
+    public GeneratedExtension<Obj, ?> getExtension();
+    
     /**
      * <p>
      * Serializes {@code object} into the given {@link Obj}. Usually, this will create one or more messages that
