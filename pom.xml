@@ -4,19 +4,83 @@
 
  <groupId>at.pria.koza</groupId>
  <artifactId>polybuf</artifactId>
- <version>0.0.4</version>
+ <version>0.1.0</version>
  <name>Polybuf</name>
  <description>
   A library for serializing object-oriented (i.e. polymorphic) data structures
   into protobuf messages.
  </description>
- 
+
+ <dependencies>
+  <dependency>
+   <groupId>com.google.protobuf</groupId>
+   <artifactId>protobuf-java</artifactId>
+   <version>2.5.0</version>
+  </dependency>
+ </dependencies>
+
  <properties>
+  <!-- project settings -->
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   <maven.compiler.source>1.7</maven.compiler.source>
   <maven.compiler.target>1.7</maven.compiler.target>
+
+  <!-- github settings -->
+  <github.owner>SillyFreak</github.owner>
+  <github.repo>Polybuf</github.repo>
+  <!-- github scm settings -->
+  <github.connection.r>scm:git:https://github.com/${github.owner}/${github.repo}.git</github.connection.r>
+  <github.connection.rw>scm:git:https://github.com/${github.owner}/${github.repo}.git</github.connection.rw>
+  <github.url>https://github.com/${github.owner}/${github.repo}</github.url>
+  <!-- distribution settings -->
+  <distribution.name>${github.owner}</distribution.name>
+  <distribution.url>file://${basedir}/../MavenRepo</distribution.url>
+  <github.releases>https://github.com/${github.owner}/${github.repo}/releases</github.releases>
+  <!-- repository settings -->
+  <repo.sillyfreak>https://raw.github.com/${github.owner}/MavenRepo/master</repo.sillyfreak>
  </properties>
- 
+
+ <scm>
+  <connection>${github.connection.r}</connection>
+  <developerConnection>${github.connection.rw}</developerConnection>
+  <url>${github.url}</url>
+ </scm>
+
+ <distributionManagement>
+  <repository>
+   <id>${distribution.name}-releases</id>
+   <url>${distribution.url}/releases</url>
+  </repository>
+  <snapshotRepository>
+   <id>${distribution.name}-snapshots</id>
+   <url>${distribution.url}/snapshots</url>
+  </snapshotRepository>
+  <downloadUrl>${github.releases}</downloadUrl>
+ </distributionManagement>
+
+ <repositories>
+  <repository>
+   <id>${distribution.name}-releases</id>
+   <url>${repo.sillyfreak}/releases</url>
+   <releases>
+    <enabled>true</enabled>
+   </releases>
+   <snapshots>
+    <enabled>false</enabled>
+   </snapshots>
+  </repository>
+  <repository>
+   <id>${distribution.name}-snapshots</id>
+   <url>${repo.sillyfreak}/snapshots</url>
+   <releases>
+    <enabled>false</enabled>
+   </releases>
+   <snapshots>
+    <enabled>true</enabled>
+   </snapshots>
+  </repository>
+ </repositories>
+
  <build>
   <plugins>
    <plugin>
@@ -67,12 +131,4 @@
    </plugin>
   </plugins>
  </build>
-
- <dependencies>
-  <dependency>
-   <groupId>com.google.protobuf</groupId>
-   <artifactId>protobuf-java</artifactId>
-   <version>2.5.0</version>
-  </dependency>
- </dependencies>
 </project>
