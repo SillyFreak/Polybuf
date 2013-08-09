@@ -20,11 +20,27 @@
  </dependencies>
 
  <properties>
+  <!-- project settings -->
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   <maven.compiler.source>1.7</maven.compiler.source>
   <maven.compiler.target>1.7</maven.compiler.target>
+
+  <!-- github settings -->
+  <github.owner>SillyFreak</github.owner>
+  <github.repo>Polybuf</github.repo>
+  <!-- github scm settings -->
+  <github.connection.r>scm:git:https://github.com/${github.owner}/${github.repo}.git</github.connection.r>
+  <github.connection.rw>scm:git:https://github.com/${github.owner}/${github.repo}.git</github.connection.rw>
+  <github.url>https://github.com/${github.owner}/${github.repo}</github.url>
+  <github.raw>https://raw.github.com/${github.owner}/${github.repo}</github.raw>
  </properties>
- 
+
+ <scm>
+  <connection>${github.connection.r}</connection>
+  <developerConnection>${github.connection.rw}</developerConnection>
+  <url>${github.url}</url>
+ </scm>
+
  <build>
   <plugins>
    <plugin>
