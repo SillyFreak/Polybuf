@@ -33,6 +33,10 @@
   <github.connection.rw>scm:git:https://github.com/${github.owner}/${github.repo}.git</github.connection.rw>
   <github.url>https://github.com/${github.owner}/${github.repo}</github.url>
   <github.raw>https://raw.github.com/${github.owner}/${github.repo}</github.raw>
+  <github.releases>https://github.com/${github.owner}/${github.repo}/releases</github.releases>
+  <!-- distribution settings -->
+  <distribution.name>${github.owner}</distribution.name>
+  <distribution.url>file://${basedir}/../MavenRepo</distribution.url>
  </properties>
 
  <scm>
@@ -40,6 +44,18 @@
   <developerConnection>${github.connection.rw}</developerConnection>
   <url>${github.url}</url>
  </scm>
+
+ <distributionManagement>
+  <repository>
+   <id>${distribution.name}-releases</id>
+   <url>${distribution.url}/releases</url>
+  </repository>
+  <snapshotRepository>
+   <id>${distribution.name}-snapshots</id>
+   <url>${distribution.url}/snapshots</url>
+  </snapshotRepository>
+  <downloadUrl>${github.releases}</downloadUrl>
+ </distributionManagement>
 
  <build>
   <plugins>
