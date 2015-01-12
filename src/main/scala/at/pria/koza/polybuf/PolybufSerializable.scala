@@ -1,11 +1,10 @@
 /**
  * PolybufSerializable.java
- * 
+ *
  * Created on 18.05.2013
  */
 
-package at.pria.koza.polybuf;
-
+package at.pria.koza.polybuf
 
 /**
  * <p>
@@ -13,17 +12,17 @@ package at.pria.koza.polybuf;
  * classes. A {@code PolybufSerializable} class provides a {@linkplain #getTypeId() type id} that corresponds to
  * the protobuf extension field id. For example, consider this message:
  * </p>
- * 
+ *
  * <pre>
  * message Example {
  *     extend Obj {
  *         optional Example example = 100;
  *     }
- *     
+ *
  *     optional string value = 1;
  * }
  * </pre>
- * 
+ *
  * <p>
  * The {@code Example} message declares the {@code Obj}-extension {@code example = 100}, thus its ID is 100.
  * Protobuf requires that extension field labels are unique, thus the number 100 unambiguously refers to the
@@ -37,15 +36,15 @@ package at.pria.koza.polybuf;
  * any inherited fields. The serialized form will have two extensions set, and the {@link PolybufIO} code for
  * {@code Example} can be reused by the subclass' {@link PolybufIO}.
  * </p>
- * 
+ *
  * @version V1.0 18.05.2013
  * @author SillyFreak
  */
-public interface PolybufSerializable {
-    /**
-     * <p>
-     * Returns the corresponding protobuf extension field ID, as explained above.
-     * </p>
-     */
-    public int getTypeId();
+trait PolybufSerializable {
+  /**
+   * <p>
+   * Returns the corresponding protobuf extension field ID, as explained above.
+   * </p>
+   */
+  def getTypeId(): Int;
 }
