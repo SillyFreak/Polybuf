@@ -54,7 +54,7 @@ trait PolybufIO[T] {
    * @throws PolybufException if anything goes wrong
    */
   @throws[PolybufException]("if anything goes wrong")
-  def serialize(out: PolybufOutput, instance: T, obj: Obj.Builder): Unit;
+  def serialize(out: PolybufOutput, instance: T, obj: Obj.Builder): Unit
 
   /**
    * <p>
