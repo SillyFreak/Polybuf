@@ -1,0 +1,67 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+class GitVersion implements Plugin<Project> {
+    void apply(Project project) {
+        project.ext.gitVersion = { prefix -> getGitInferredVersion(prefix) }
+    }
+    
+    String getGitInferredVersion(String prefix) {
+        Pattern p = Pattern.compile("(.*?)(?:-(\\d+)-g([0-9a-f]{7}))?");
+        String tag = 'git describe --tags'.execute().text.trim();
+        Matcher m = p.matcher(tag);
+        if(!m.matches()) {
+            //the pattern should match anything: it starts with .*, and the rest is optional
+            throw new AssertionError(tag);
+        }
+        
+        String version = m.group(1);
+        if(version.startsWith(prefix)) version = version.substring(prefix.length());
+        String hash = m.group(3);
+        //if we're not at the tagged revision, this is a snapshot on top of it
+        //TODO do we want the hash?
+//        if(hash != null) version += "-SNAPSHOT-" + hash;
+        if(hash != null) version += "-SNAPSHOT";
+        return version;
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'eclipse'
+apply plugin: GitVersion
+apply plugin: 'protobuf'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+version = gitVersion('')
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
+}
+
+jar {
+    manifest {
+        attributes  'Implementation-Title':   project.name,
+                    'Implementation-Version': project.version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.1'
+    compile 'com.google.protobuf:protobuf-java:2.5.0'
+    testCompile 'junit:junit:4.+'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    
+    dependencies {
+        classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1'
+    }
+}
