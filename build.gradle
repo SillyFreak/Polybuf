@@ -1,6 +1,6 @@
-apply from: new File('gradle/ide.gradle')
-apply from: new File('gradle/maven.gradle')
-apply from: new File('gradle/GitVersion.gradle')
+apply from: project.file('gradle/ide.gradle')
+apply from: project.file('gradle/maven.gradle')
+apply from: project.file('gradle/GitVersion.gradle')
 apply plugin: 'scala'
 apply plugin: 'protobuf'
 
