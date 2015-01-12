@@ -1,0 +1,10 @@
+//adapted from https://raw.githubusercontent.com/spockframework/spock/groovy-1.7/gradle/publishMaven.gradle
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            mavenLocal()
+        }
+    }
+}

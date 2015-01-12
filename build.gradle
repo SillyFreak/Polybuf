@@ -1,7 +1,7 @@
 apply from: new File('gradle/ide.gradle')
+apply from: new File('gradle/maven.gradle')
 apply from: new File('gradle/GitVersion.gradle')
 apply plugin: 'scala'
-apply plugin: 'maven'
 apply plugin: 'protobuf'
 
 sourceCompatibility = '1.7'
@@ -43,14 +43,6 @@ dependencies {
     compile 'org.scala-lang:scala-library:2.11.1'
     compile 'com.google.protobuf:protobuf-java:2.5.0'
     testCompile 'junit:junit:4.+'
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            mavenLocal()
-        }
-    }
 }
 
 buildscript {
