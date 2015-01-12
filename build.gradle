@@ -34,6 +34,13 @@ artifacts {
     archives javadocJar
 }
 
+basePom {
+    project {
+        name project.name
+        description 'A library for serializing object-oriented (i.e. polymorphic) data structures into protobuf messages.'
+    }
+}
+
 repositories {
     mavenCentral()
 }
