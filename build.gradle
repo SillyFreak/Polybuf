@@ -33,7 +33,7 @@ apply plugin: 'protobuf'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
-version = gitVersion('release-')
+version = gitVersion('')
 
 tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
