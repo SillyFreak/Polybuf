@@ -1,17 +1,13 @@
-apply plugin: 'scala'
-apply plugin: 'protobuf'
+apply from: project.file('gradle/scala.gradle')
 apply from: project.file('gradle/ide.gradle')
 apply from: project.file('gradle/package.gradle')
 apply from: project.file('gradle/GitVersion.gradle')
 apply from: project.file('gradle/maven.gradle')
+apply plugin: 'protobuf'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 group = 'at.pria.koza'
-
-tasks.withType(ScalaCompile) {
-    scalaCompileOptions.useAnt = false
-}
 
 basePom {
     project {
