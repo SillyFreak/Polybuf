@@ -26,7 +26,7 @@ class GitVersion implements Plugin<Project> {
     }
 }
 
-apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: GitVersion
 apply plugin: 'protobuf'
@@ -34,6 +34,10 @@ apply plugin: 'protobuf'
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 version = gitVersion('release-')
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
+}
 
 jar {
     manifest {
@@ -47,6 +51,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.scala-lang:scala-library:2.11.1'
     compile 'com.google.protobuf:protobuf-java:2.5.0'
     testCompile 'junit:junit:4.+'
 }
