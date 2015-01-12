@@ -1,13 +1,12 @@
 //adapted from https://github.com/spockframework/spock/blob/spock-0.7-groovy-2.0/gradle/publishMaven.gradle
 apply plugin: 'maven'
 
-def basePom = {
-}
-
 def deployers = []
-project.afterEvaluate {
-    configure(deployers) {
-        pom basePom
+ext.basePom = { template ->
+    project.afterEvaluate {
+        configure(deployers) {
+            pom template
+        }
     }
 }
 
