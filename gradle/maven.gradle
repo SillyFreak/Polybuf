@@ -2,14 +2,6 @@
 apply plugin: 'maven'
 
 def deployers = []
-ext.basePom = { template ->
-    project.afterEvaluate {
-        configure(deployers) {
-            pom template
-        }
-    }
-}
-
 install {
     deployers << repositories.mavenInstaller
 }
@@ -23,6 +15,14 @@ uploadArchives {
 }
 
 ext {
+    basePom = { template ->
+        project.afterEvaluate {
+            configure(deployers) {
+                pom template
+            }
+        }
+    }
+    
     libs = [
         optional: [],
         provided: [],
