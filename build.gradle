@@ -26,9 +26,9 @@ class GitVersion implements Plugin<Project> {
     }
 }
 
+apply from: new File('gradle/ide.gradle')
 apply plugin: 'scala'
 apply plugin: 'maven'
-apply plugin: 'eclipse'
 apply plugin: GitVersion
 apply plugin: 'protobuf'
 
