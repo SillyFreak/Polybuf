@@ -29,6 +29,7 @@ class GitVersion implements Plugin<Project> {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: GitVersion
+apply plugin: 'protobuf'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
@@ -48,4 +49,14 @@ repositories {
 dependencies {
     compile 'com.google.protobuf:protobuf-java:2.5.0'
     testCompile 'junit:junit:4.+'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    
+    dependencies {
+        classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1'
+    }
 }
