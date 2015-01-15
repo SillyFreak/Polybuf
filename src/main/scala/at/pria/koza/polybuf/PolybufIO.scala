@@ -86,5 +86,5 @@ trait PolybufIO[T <: PolybufSerializable] {
    * @throws PolybufException if anything goes wrong
    */
   @throws[PolybufException]("if anything goes wrong")
-  def deserialize(in: PolybufInput, obj: Obj, instance: TT): Unit
+  def deserialize(in: PolybufInput, obj: Obj, instance: TT): Unit = {}
 }
