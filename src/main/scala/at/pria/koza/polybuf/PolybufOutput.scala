@@ -20,9 +20,8 @@ import at.pria.koza.polybuf.proto.Polybuf.Obj
  * @author SillyFreak
  */
 class PolybufOutput(config: PolybufConfig) {
-  private val _objects: Map[Object, Obj] = new IdentityHashMap()
-  private val _config: PolybufConfig = config
-  private var _id: Int = 0
+  private val objects: Map[Object, Obj] = new IdentityHashMap()
+  private var id: Int = 0
 
   @throws[PolybufException]
   def writeObject(o: Object): Obj = {
@@ -30,22 +29,24 @@ class PolybufOutput(config: PolybufConfig) {
       throw new PolybufException("not serializable: " + o)
 
     val instance = o.asInstanceOf[PolybufSerializable]
-    val typeId = instance.getTypeId()
-    val io: PolybufIO[AnyRef] = _config.get(typeId)
-    if (io == null)
-      throw new PolybufException("No IO for type: " + typeId)
+    val typeId = instance.typeId
+    config.get(typeId) match {
+      case Some(io) => {
+        val obj = Obj.newBuilder()
 
-    val obj = Obj.newBuilder()
+        //create a reference for future writeObject calls
+        id += 1
+        obj.setId(id);
+        objects.put(o, obj.build())
 
-    //create a reference for future writeObject calls
-    _id += 1
-    obj.setId(_id);
-    _objects.put(o, obj.build())
+        //parse the actual object. allow objects to overwrite the type
+        obj.setTypeId(typeId)
+        io.serialize(this, instance.asInstanceOf[io.TT], obj)
 
-    //parse the actual object. allow objects to overwrite the type
-    obj.setTypeId(typeId)
-    io.serialize(this, instance, obj)
-
-    obj.build()
+        obj.build()
+      }
+      case None =>
+        throw new PolybufException("No IO for type: " + typeId)
+    }
   }
 }

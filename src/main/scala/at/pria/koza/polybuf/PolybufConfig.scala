@@ -6,8 +6,8 @@
 
 package at.pria.koza.polybuf
 
-import java.util.HashMap
-import java.util.Map
+import scala.collection.mutable
+
 import com.google.protobuf.ExtensionRegistry
 
 /**
@@ -23,16 +23,14 @@ import com.google.protobuf.ExtensionRegistry
  * @author SillyFreak
  */
 class PolybufConfig() {
-  private val _config: Map[Int, PolybufIO[_]] = new HashMap()
-  private val _registry: ExtensionRegistry = ExtensionRegistry.newInstance()
+  private val config = mutable.Map[Int, PolybufIO[_ <: PolybufSerializable]]()
+  val registry: ExtensionRegistry = ExtensionRegistry.newInstance()
 
-  def getRegistry(): ExtensionRegistry = _registry
-
-  def add(io: PolybufIO[_]): Unit = {
-    _config.put(io.getType(), io)
-    _registry.add(io.getExtension())
+  def add(io: PolybufIO[_ <: PolybufSerializable]): Unit = {
+    config.put(io.typeId, io)
+    registry.add(io.extension)
   }
 
-  def get[T](typeID: Int): PolybufIO[T] =
-    _config.get(typeID).asInstanceOf[PolybufIO[T]]
+  def get(typeID: Int): Option[PolybufIO[_ <: PolybufSerializable]] =
+    config.get(typeID)
 }

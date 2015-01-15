@@ -18,7 +18,9 @@ import at.pria.koza.polybuf.proto.Polybuf.Obj
  * @version V1.0 20.05.2013
  * @author SillyFreak
  */
-trait PolybufIO[T] {
+trait PolybufIO[T <: PolybufSerializable] {
+  type TT = T
+
   /**
    * <p>
    * Returns this IO's type's type ID. This can be retrieved like this:
@@ -29,7 +31,7 @@ trait PolybufIO[T] {
    *
    * @return this IO's type's type ID
    */
-  def getType(): Int
+  def typeId = extension.getDescriptor.getNumber
 
   /**
    * <p>
@@ -39,7 +41,7 @@ trait PolybufIO[T] {
    *
    * @return the extension used by this IO
    */
-  def getExtension(): GeneratedExtension[Obj, _]
+  def extension: GeneratedExtension[Obj, _]
 
   /**
    * <p>
@@ -54,7 +56,7 @@ trait PolybufIO[T] {
    * @throws PolybufException if anything goes wrong
    */
   @throws[PolybufException]("if anything goes wrong")
-  def serialize(out: PolybufOutput, instance: T, obj: Obj.Builder): Unit
+  def serialize(out: PolybufOutput, instance: TT, obj: Obj.Builder): Unit
 
   /**
    * <p>
@@ -70,7 +72,7 @@ trait PolybufIO[T] {
    * @throws PolybufException if anything goes wrong
    */
   @throws[PolybufException]("if anything goes wrong")
-  def initialize(in: PolybufInput, obj: Obj): T
+  def initialize(in: PolybufInput, obj: Obj): TT
 
   /**
    * <p>
@@ -84,5 +86,5 @@ trait PolybufIO[T] {
    * @throws PolybufException if anything goes wrong
    */
   @throws[PolybufException]("if anything goes wrong")
-  def deserialize(in: PolybufInput, obj: Obj, instance: T): Unit
+  def deserialize(in: PolybufInput, obj: Obj, instance: TT): Unit
 }

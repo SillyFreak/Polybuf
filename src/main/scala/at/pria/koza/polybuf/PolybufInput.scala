@@ -6,8 +6,7 @@
 
 package at.pria.koza.polybuf
 
-import java.util.HashMap
-import java.util.Map
+import scala.collection.mutable
 
 import at.pria.koza.polybuf.proto.Polybuf.Obj
 
@@ -20,31 +19,32 @@ import at.pria.koza.polybuf.proto.Polybuf.Obj
  * @author SillyFreak
  */
 class PolybufInput(config: PolybufConfig) {
-  private val _objects: Map[Int, Object] = new HashMap()
-  private val _config: PolybufConfig = config
+  private val objects = mutable.Map[Int, Object]()
 
   @throws[PolybufException]
-  def readObject(obj: Obj): Object = {
-    val typeId = obj.getTypeId()
+  def readObject(obj: Obj): AnyRef = {
+    val typeId = obj.getTypeId
+    val id = obj.getId
     if (typeId == 0) {
-      val id = obj.getId()
-      if (id == 0) {
+      if (id == 0)
         null
-      } else {
-        val instance = _objects.get(id)
-        if (instance == null)
-          throw new PolybufException("Unknown object: " + obj.getClass().getName() + ":" + id)
-        instance
-      }
+      else
+        objects.get(id) match {
+          case Some(instance) => instance
+          case None =>
+            throw new PolybufException("Unknown object: " + obj.getClass().getName() + ":" + id)
+        }
     } else {
-      val io: PolybufIO[AnyRef] = config.get(typeId)
-      if (io == null)
-        throw new PolybufException("No IO for type: " + typeId)
-      val instance = io.initialize(this, obj)
-      _objects.put(obj.getId(), instance)
-      io.deserialize(this, obj, instance)
-
-      instance
+      config.get(typeId) match {
+        case Some(io) => {
+          val instance: io.TT = io.initialize(this, obj)
+          objects.put(id, instance)
+          io.deserialize(this, obj, instance)
+          instance
+        }
+        case None =>
+          throw new PolybufException("No IO for type: " + typeId)
+      }
     }
   }
 }

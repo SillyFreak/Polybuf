@@ -45,5 +45,5 @@ trait PolybufSerializable {
    * Returns the corresponding protobuf extension field ID, as explained above.
    * </p>
    */
-  def getTypeId(): Int
+  def typeId: Int
 }
