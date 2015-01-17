@@ -18,6 +18,7 @@ basePom {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
